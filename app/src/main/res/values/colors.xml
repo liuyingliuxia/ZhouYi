@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#DC143C</color>
+    <color name="white_hint">#7FF1F1F1</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray">#888888</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="card_focus_background">#ffa255</color>
+    <color name="tab_title_focus">#f8d73d</color>
+    <color name="white_pp50">#80FFFFFF</color>
+    <color name="white_pp70">#4DFFFFFF</color>
+    <color name="white_pp90">#1AFFFFFF</color>
+    <color name="white_pp80">#33FFFFFF</color>
+    <color name="black_pp50">#80000000</color>
+    <color name="black_pp90">#1A000000</color>
+    <color name="black_pp10">#E6000000</color>
+    <color name="black_tou_text_focus">#101010</color>
+    <color name="lex_message_black">#80000000</color>
+    <!--search-->
+    <color name="search_input_line">#88FFFFFF</color>
+    <color name="color_search_bg_n">#2F7EB6</color>
+    <color name="color_search_bg_f_start">#FFDD3D</color>
+    <color name="color_search_bg_f_end">#FBA121</color>
+    <color name="color_search_text_f">#2F3040</color>
+    <color name="wave_from_color">#1d97b9</color>
+    <color name="wave_to_color">#a149f2</color>
+    <color name="tv_normal_color">#FFF1F1F1</color>
+    <color name="apps_detail_tv_bg_color">#991D2353</color>
+    <color name="tv_e7_white_color">#FFDBDEE7</color>
+    <color name="black">#FF000000</color>
+    <color name="search_result_color">#DBDEE7</color>
+    <color name="color_ba322">#FBA322</color>
+    <color name="color_ff933">#FF933BD1</color>
+    <color name="color_00933">#00933BD1</color>
+    <color name="color_wifi_normal">#FFF1F1F1</color>
+    <color name="color_f1f1f1_pp80">#33F1F1F1</color>
+    <color name="color_f1f1f1_pp50">#80F1F1F1</color>
+
+    <color name="color_recently_top">#3a61c2</color>
+    <color name="color_recently_bottom">#24a7db</color>
+    <color name="color_recently_full">#3f9af7</color>
+
+    <color name="textview_focus">#f8d73d</color>
+    <color name="title_first_tv_color">#80F1F1F1</color>
+
+    <color name="user_agreement_content">#bbbbbb</color>
+    <color name="user_agreement_bar">#d8d8d8</color>
+
+    <color name="setting_sup_color">#19F1F1F1</color>
+    <color name="setting_sup_border_color">#33F1F1F1</color>
+    <color name="setting_sup_time_color">#CCDBDEE7</color>
+
+
+    <color name="colorFocused">#bbdefb</color>
+    <color name="fivth_white">#80FFFFFF</color>
+    <color name="tenth_white">#E6FFFFFF</color>
+    <color name="color_download_bg">#D7D8F7</color>
+    <color name="content_tv">#4D4D4D</color>
+    <color name="viewcount_tv">#9B9B9B</color>
+    <color name="viewcount_bg">#62000000</color>
+    <color name="detail_bg">#393f96</color>
+    <color name="topsport_title">#BEC8DB</color>
+
+    <color name="color_mac_dialog_bg">#CC000000</color>
+    <color name="color_retry">#0779EC</color>
+
+    <color name="text_color_white">@android:color/white</color>
+
+    <!--jmgo 开机引导页用  颜色后面带数字的为不透明度 -->
+    <color name="white5">#0Dffffff</color>
+    <color name="white10">#1Affffff</color>
+    <color name="white20">#33ffffff</color>
+    <color name="white40">#66ffffff</color>
+    <color name="white60">#99ffffff</color>
+    <color name="white80">#CCffffff</color>
+    <color name="white90">#E6ffffff</color>
+
+
+    <color name="blue1E9CFF">#1E9CFF</color>
+    <color name="blue0D81F3">#0D81F3</color>
+
+
+    <color name="black40">#66000000</color>
+    <color name="black3D4550">#3D4550</color>
+    <color name="black353D47">#353D47</color>
+    <color name="color_384149">#384149</color>
+    <color name="color_0879ec">#0879ec</color>
+    <color name="color_232a30">#232a30</color>
+    <color name="color_191f25">#191f25</color>
+    <color name="color_2196F3">#2196F3</color>
+    <color name="color_662196F3">#662196F3</color>
+    <color name="color0879ec">#0879ec</color>
+
+    <color name="black20">#33000000</color>
+    <color name="black60">#99000000</color>
+    <color name="color_91949A">#9991949A</color>
+    <color name="color_292E39">#292E39</color>
+    <color name="color_curtain_bg">#2B313B</color>
+</resources>
