@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView coin3;
     TextView tvResult;
 
+    TextView tvSeeAll;
+
     int clickCount;
 
     int[] result1;
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         coin1 = findViewById(R.id.iv_coin1);
         coin2 = findViewById(R.id.iv_coin2);
         coin3 = findViewById(R.id.iv_coin3);
+        tvSeeAll = findViewById(R.id.tv_see_all);
+        tvSeeAll.setMovementMethod(new ScrollingMovementMethod());
         lottieAnimationView.setAnimation("loading.json");
         lottieAnimationView.setRepeatCount(3);
         lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
@@ -93,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        tvSeeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                tvSeeAll.setBackground(null);
+                StringBuilder sb = new StringBuilder();
+                for (Gua gua : Const.sixtyFourDiagramsMap) {
+                    sb.append(gua.toString());
+                    sb.append("\n ");
+                }
+                //sb.setLength(sb.length() - 2);
+                // 删除最后一个逗号和空格
+                tvSeeAll.setText(sb.toString());
+            }
+        });
     }
 
     private void getCoinResult() {
@@ -126,7 +146,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             int resultNumber = numberOne * 10 + numberTwo;
-            tvResult.setText("结果是：" + resultNumber);
+            Gua nowGua = null;
+            for (Gua gua : Const.sixtyFourDiagramsMap) {
+                if (gua.getId() == resultNumber) {
+                    nowGua = gua;
+                }
+            }
+            if (nowGua != null) {
+                tvResult.setText("结果是：\n" + "   序号：" + resultNumber + " 第" + nowGua.getIndexGua() + "卦 " + nowGua.getName() + "-- " + nowGua.getDescrip());
+            }
         }
     }
 
