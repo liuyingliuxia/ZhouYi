@@ -41,7 +41,7 @@
         android:textSize="@dimen/sp_28"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -57,6 +57,80 @@
         app:lottie_fileName="loading.json"
         app:lottie_loop="true"
         tools:visibility="visible" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_gua_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/tv_result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/iv_gua1"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/iv_gua2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_gua2"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/iv_gua3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_gua3"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/iv_gua4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_gua4"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/iv_gua5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_gua5"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/iv_gua6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_gua6"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/tv_result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_result"
@@ -131,7 +205,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,12 +218,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bg_selector"
-            android:padding="@dimen/dp_20"
-            android:text="查看全部卦"
             android:lineSpacingExtra="@dimen/dp_10"
-            android:textColor="@color/black"
             android:maxLines="65"
+            android:padding="@dimen/dp_20"
             android:scrollbars="vertical"
+            android:text="查看全部卦"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_28" />
 
     </ScrollView>

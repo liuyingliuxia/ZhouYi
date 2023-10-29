@@ -5,9 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -40,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
     int[] result1;
     int[] result2;
 
+    LinearLayout llGua;
+    ImageView gua1;
+    ImageView gua2;
+    ImageView gua3;
+    ImageView gua4;
+    ImageView gua5;
+    ImageView gua6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
         coin2 = findViewById(R.id.iv_coin2);
         coin3 = findViewById(R.id.iv_coin3);
         tvSeeAll = findViewById(R.id.tv_see_all);
+        llGua = findViewById(R.id.ll_gua_result);
+        gua1 = findViewById(R.id.iv_gua1);
+        gua2 = findViewById(R.id.iv_gua2);
+        gua3 = findViewById(R.id.iv_gua3);
+        gua4 = findViewById(R.id.iv_gua4);
+        gua5 = findViewById(R.id.iv_gua5);
+        gua6 = findViewById(R.id.iv_gua6);
+
         tvSeeAll.setMovementMethod(new ScrollingMovementMethod());
         lottieAnimationView.setAnimation("loading.json");
         lottieAnimationView.setRepeatCount(3);
@@ -85,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (clickCount == 0) {
                     tvStart.setText("开始预测");
+                    llGua.setVisibility(View.INVISIBLE);
                 } else if (clickCount == 1) {
                     tvStart.setText("请再投一次");
                 }
@@ -102,15 +126,18 @@ public class MainActivity extends AppCompatActivity {
         tvSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tvSeeAll.setBackground(null);
-                StringBuilder sb = new StringBuilder();
-                for (Gua gua : Const.sixtyFourDiagramsMap) {
-                    sb.append(gua.toString());
-                    sb.append("\n ");
+                if (Objects.equals(tvSeeAll.getText().toString(), "查看全部卦")) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Gua gua : Const.sixtyFourDiagramsMap) {
+                        sb.append(gua.toString());
+                        sb.append("\n ");
+                    }
+                    //sb.setLength(sb.length() - 2);
+                    // 删除最后一个逗号和空格
+                    tvSeeAll.setText(sb.toString());
+                } else {
+                    tvSeeAll.setText("查看全部卦");
                 }
-                //sb.setLength(sb.length() - 2);
-                // 删除最后一个逗号和空格
-                tvSeeAll.setText(sb.toString());
             }
         });
     }
@@ -153,7 +180,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (nowGua != null) {
-                tvResult.setText("结果是：\n" + "   序号：" + resultNumber + " 第" + nowGua.getIndexGua() + "卦 " + nowGua.getName() + "-- " + nowGua.getDescrip());
+                SpannableString text = new SpannableString("结果是：\n" + "   序号：" + resultNumber + " 第" + nowGua.getIndexGua() + "卦:" + nowGua.getName() + "-- \n" + nowGua.getDescrip());
+                text.setSpan(new ForegroundColorSpan(Color.RED), text.toString().indexOf("卦:") + 2, text.toString().indexOf("--"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                text.setSpan(new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.dp_48), true), text.toString().indexOf("卦:") + 2, text.toString().indexOf("--"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvResult.setText(text);
+                llGua.setVisibility(View.VISIBLE);
+                gua1.setBackgroundResource(result1[0] == 1 ? R.color.black : R.drawable.yin);
+                gua2.setBackgroundResource(result1[1] == 1 ? R.color.black : R.drawable.yin);
+                gua3.setBackgroundResource(result1[2] == 1 ? R.color.black : R.drawable.yin);
+                gua4.setBackgroundResource(result2[0] == 1 ? R.color.black : R.drawable.yin);
+                gua5.setBackgroundResource(result2[1] == 1 ? R.color.black : R.drawable.yin);
+                gua6.setBackgroundResource(result2[2] == 1 ? R.color.black : R.drawable.yin);
             }
         }
     }
