@@ -25,6 +25,10 @@ public class Gua implements Serializable {
      */
     String descrip;
 
+    /**
+     * 解释
+     */
+    String explain;
 
     /**
      * 编码
@@ -67,6 +71,7 @@ public class Gua implements Serializable {
      * 诉讼
      */
     String litigation;
+
     public int getId() {
         return id;
     }
@@ -209,9 +214,19 @@ public class Gua implements Serializable {
 
     @Override
     public String toString() {
-        return "序号：" + id +
-                "  卦名：" + name +
-                "  第" + indexGua +
-                "卦  " + descrip;
+        return "卦数字 : " + id + "\n\n"+
+                "卦名 : " + name + "\n\n" +
+                "卦序号 : " + indexGua +
+                "描述 : " + descrip + "\n\n" +
+                "解释 : " + explain + "\n\n" +
+                "编码 : " + code + "\n\n" +
+                "卦辞 : " + detail + "\n\n" +
+                "推断 : " + inference + "\n\n" +
+                "大象 : " + daXiang + "\n\n" +
+                "运势 : " + fortune + "\n\n" +
+                "爱情 : " + love + "\n\n" +
+                "疾病 : " + disease + "\n\n" +
+                "失物 : " + lost + "\n\n" +
+                "诉讼 : " + litigation + "\n\n";
     }
 }

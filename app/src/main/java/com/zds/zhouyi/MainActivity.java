@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +20,19 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -31,6 +43,7 @@ import java.util.Set;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     TextView tvStart;
     TextView tvStartTips;
     LottieAnimationView lottieAnimationView;
@@ -41,8 +54,15 @@ public class MainActivity extends AppCompatActivity {
     TextView tvResult;
 
     TextView tvSeeAll;
+    Gua nowGua = null;
 
-    int clickCount;
+    /**
+     * -1 初始状态 ：文案：开始预测 -->
+     * <p>
+     * 0 投第一次 出第一次 铜钱：文案：请再投一次 -->
+     * 1 投第二次 出结果：文案：再算一卦
+     */
+    int clickCount = -1;
 
     int[] result1;
     int[] result2;
@@ -54,11 +74,15 @@ public class MainActivity extends AppCompatActivity {
     ImageView gua4;
     ImageView gua5;
     ImageView gua6;
+    CustomDialog.Builder builder;
+
+    ArrayList<Gua> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataList = readJsonFromAssets();
         result1 = new int[3];
         result2 = new int[3];
         tvStart = findViewById(R.id.tv_start);
@@ -106,22 +130,44 @@ public class MainActivity extends AppCompatActivity {
         tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickCount++;
                 if (clickCount == 0) {
-                    tvStart.setText("开始预测");
-                    llGua.setVisibility(View.INVISIBLE);
-                } else if (clickCount == 1) {
                     tvStart.setText("请再投一次");
+                    llGua.setVisibility(View.INVISIBLE);
+                    tvResult.setVisibility(View.INVISIBLE);
+                    coinLayout.setVisibility(View.INVISIBLE);
                 }
                 lottieAnimationView.setVisibility(View.VISIBLE);
                 lottieAnimationView.playAnimation();
                 getCoinResult();
-                clickCount++;
+                Log.d(TAG, "onClick clickCount=" + clickCount);
                 if (clickCount > 1) {
                     clickCount = 0;
+                    tvStart.setText("请再投一次");
+                    llGua.setVisibility(View.INVISIBLE);
+                    tvResult.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
+        tvResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹窗 查看详情
+                if (builder == null) {
+                    builder = new CustomDialog.Builder(v.getContext());
+                }
+                Gua gua = null;
+                if (dataList != null && nowGua != null) {
+                    if (dataList.size() > nowGua.indexGua) {
+                        gua = dataList.get(nowGua.indexGua - 1);
+                    }
+                }
+                if (gua != null) {
+                    builder.setContent(gua.toString()).create().show();
+                }
+            }
+        });
 
         tvSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void getCoinResult() {
@@ -149,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
         boolean bool1 = random.nextBoolean();
         boolean bool2 = random.nextBoolean();
         boolean bool3 = random.nextBoolean();
-
         coin1.setText(bool1 ? "正" : "反");
         coin2.setText(bool2 ? "正" : "反");
         coin3.setText(bool3 ? "正" : "反");
@@ -173,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             int resultNumber = numberOne * 10 + numberTwo;
-            Gua nowGua = null;
+
             for (Gua gua : Const.sixtyFourDiagramsMap) {
                 if (gua.getId() == resultNumber) {
                     nowGua = gua;
@@ -183,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 SpannableString text = new SpannableString("结果是：\n" + "   序号：" + resultNumber + " 第" + nowGua.getIndexGua() + "卦:" + nowGua.getName() + "-- \n" + nowGua.getDescrip());
                 text.setSpan(new ForegroundColorSpan(Color.RED), text.toString().indexOf("卦:") + 2, text.toString().indexOf("--"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 text.setSpan(new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.dp_48), true), text.toString().indexOf("卦:") + 2, text.toString().indexOf("--"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvResult.setVisibility(View.VISIBLE);
                 tvResult.setText(text);
                 llGua.setVisibility(View.VISIBLE);
                 gua1.setBackgroundResource(result1[0] == 1 ? R.color.black : R.drawable.yin);
@@ -192,7 +239,32 @@ public class MainActivity extends AppCompatActivity {
                 gua5.setBackgroundResource(result2[1] == 1 ? R.color.black : R.drawable.yin);
                 gua6.setBackgroundResource(result2[2] == 1 ? R.color.black : R.drawable.yin);
             }
+            tvStart.setText("再算一卦");
         }
     }
 
+    /**
+     * 读取 JSON 数据的方法
+     */
+    private ArrayList<Gua> readJsonFromAssets() {
+        try {
+            // 打开 assets 文件夹中的 JSON 文件
+            InputStream inputStream = getAssets().open("sixty_four_data.json");
+
+            // 使用 InputStreamReader 读取 JSON 文件
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            // 使用 Gson 解析 JSON 数据
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Gua>>() {
+            }.getType();
+
+            // 返回解析得到的数据
+            return gson.fromJson(reader, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
